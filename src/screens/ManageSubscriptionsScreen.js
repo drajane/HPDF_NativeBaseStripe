@@ -14,8 +14,7 @@ class ManageSubscriptionsScreen extends Component {
 		  isLoading: true,
 		  checkboxes : [],
 		  plans: {},
-		  planIdMap: [],
-		  plansChecked: {}
+		  planIdMap: []
 		}; 
 	}
 
@@ -42,8 +41,8 @@ class ManageSubscriptionsScreen extends Component {
 		  planIdMap = planIdMap.concat(id);
 		}
 
-		this.setState({checkboxes});
-		this.setState({planIdMap});
+		this.setState({...this.state, checkboxes});
+		this.setState({...this.state, planIdMap});
 
 	}
 
@@ -96,11 +95,14 @@ class ManageSubscriptionsScreen extends Component {
 						<ListItem itemHeader first>
 							<Text>Subscription Plans</Text>
 						</ListItem>
-						{console.log("MS CB2: "+JSON.stringify(checkboxes))}
+						{
+							console.log("MS state: "+JSON.stringify(this.state))
+						}
 						<List
 							dataArray={plans.data}
 							renderRow={(item, i) => {
 								const itemName = item.name;
+								console.log("MS state: "+JSON.stringify(this.state))
 								console.log('MS planIdMap: '+(planIdMap && planIdMap.includes(item.id)));
 								console.log('itemName2: '+itemName);								
 								return(
