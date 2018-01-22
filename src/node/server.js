@@ -45,12 +45,17 @@ app.post('/createSubscription', (req, res) => {
   console.log('body: '+JSON.stringify(req.body));
   console.log('customer: '+req.body.customerId);
   console.log('plans'+req.body.planIds);
+  var plans = req.body.planIds;
   console.log('billing: '+req.body.billing);
+  plans.forEach(element => {
+    console.log(element);
+  });
   stripe.subscriptions.create({
     customer: "cus_C9bd0jQt58CjL1",
     items: [
       {
-        plan: "BasicMonthlyPlan",
+        
+        //plan: "BasicMonthlyPlan",
       },
     ],
     //billing:'send_invoice',

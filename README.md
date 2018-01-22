@@ -13,13 +13,16 @@ $ git clone git@github.com:drajane/HPDF_NativeBaseStripe.git
 $ cd HPDF_NativeBaseStripe/
 
 $ npm install
-
-#### 2. Run Node Express Back-end
-
-$ cd HPDF_NativeBaseStripe/src/node
-
-$ node server.js
 ```
+
+#### 2. Run Node Express Back-end in command prompt
+
+C:\> cd HPDF_NativeBaseStripe\src\node
+
+C:\HPDF_NativeBaseStripe\src\node>set SECRET_KEY=sk_test_ZIPaCgrGa9BNZsdnkM9OIyCI
+
+C:\> node server.js
+
 
 #### 3. Run on Expo in Android
 
