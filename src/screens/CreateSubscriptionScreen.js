@@ -11,38 +11,23 @@ class CreateSubscriptionScreen extends Component {
         super(props);
 
 		this.state = {
-		  isSubCreated: false,
-		  isItemSelected : '',
+		  selectedRadio : 'charge_automatically',
 		  subscription: {}
 		};
     }
-    
-    createSubscription(){
-		console.log("inside createSubscription");
-	
-		fetch('http://192.168.0.51:3000/createSubscription',{
-                method: "POST",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                }
-            })
-			.then((response) => {console.log('response'); return response.json();})
-			.then((responseJson) => {console.log('responseData: '+responseJson); this.setState({isSubCreated : true, subscription : responseJson}); this.props.navigation.navigate('SubscriptionDetailsScreen', {subscription : responseJson});})
-			.catch((err) => {console.log(err)}).done();  
+
+    toggleRadioButton(selection) {
+        console.log("Inside toggleRadio: "+selection);
+        this.setState({selectedRadio: selection});
     }
-    
+
     render() {
         const subscription = this.state.subscription;
             
         const { params } = this.props.navigation.state.params;
-        console.log('params: '+this.props.navigation.state.params.customer.email)
-
-        if (this.state.isSubCreated) {
-            console.log("to navigate to details screen");
-            //this.props.navigation.navigate('SubscriptionDetailsScreen', {subscription : subscription});
-        }
-  
+        console.log('CS customer params: '+this.props.navigation.state.params.customer.email)
+        console.log('CS plan params: '+JSON.stringify(this.props.navigation.state.params.plans))
+        console.log("CS SelectedRadio: "+this.state.selectedRadio);
         return (
             <Container style={styles.container}>
                 <Header>
@@ -68,9 +53,14 @@ class CreateSubscriptionScreen extends Component {
                         <ListItem itemHeader>
                             <Text style={styles.itemHeaderText}>Plan</Text>
                         </ListItem>
-                        <ListItem>
-                            <Text></Text>
-                        </ListItem>
+                        <List
+							dataArray={this.props.navigation.state.params.plans}
+							renderRow={(item, i) => 
+                                    <ListItem key={item.planId}>
+                                        <Text style={styles.itemValueText}>{item.planName}</Text>
+                                    </ListItem>
+                            }
+                        />
                         <ListItem itemHeader>
                             <Text style={styles.itemHeaderText}>Options</Text>
                         </ListItem>
@@ -88,13 +78,13 @@ class CreateSubscriptionScreen extends Component {
                         </ListItem>
                         <ListItem>
                             <Left>
-								<Radio selected={false}/>
+								<Radio selected={this.state.selectedRadio === 'charge_automatically'} onPress={() => {this.toggleRadioButton('charge_automatically')}}/>
 							</Left>
                             <Text style={styles.itemText}>Automatically charge default payment method on file</Text>
                         </ListItem>
                         <ListItem>
                             <Left>
-								<Radio selected={true}/>
+								<Radio selected={this.state.selectedRadio === 'send_invoice'} onPress={() => {this.toggleRadioButton('send_invoice')}}/>
 							</Left>
                             <Text style={styles.itemText}>Email invoices for customers to pay manually</Text>
                         </ListItem>
@@ -103,7 +93,7 @@ class CreateSubscriptionScreen extends Component {
                         <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.goBack()}>
               				<Text style={styles.buttonText}>Cancel</Text>
             			</TouchableHighlight>
-                        <TouchableHighlight light style={styles.button} onPress={this.createSubscription()}>
+                        <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.navigate('SubscriptionDetailsScreen', {customer : this.props.navigation.state.params.customer, planIds : this.props.navigation.state.params.planIds, billing : this.state.selectedRadio})}>
               				<Text style={styles.buttonText}>Create Subscription</Text>
             			</TouchableHighlight>
                     </View>

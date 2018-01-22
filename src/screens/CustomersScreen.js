@@ -17,7 +17,7 @@ import {
   Input
 } from 'native-base';
 
-import {View} from 'react-native';
+import { View, ActivityIndicator } from 'react-native';
 
 // import { customers } from '../node/data';
 
@@ -36,7 +36,7 @@ export default class CustomersScreen extends Component {
   }
 
   componentWillMount() {
-    console.log("inside componentWillMount");
+    console.log("C inside componentWillMount");
     // this.getJsonData(); 
 
     /* fetch('http://192.168.0.51:3000/getListOfCustomers')
@@ -47,7 +47,7 @@ export default class CustomersScreen extends Component {
 
   getJsonData() 
   {
-    console.log("inside getJsonData");
+    console.log("C inside getJsonData");
     
     return fetch('http://192.168.0.51:3000/getListOfCustomers')
               .then((response) => {console.log('response: '+response); return response.json();})
@@ -56,7 +56,7 @@ export default class CustomersScreen extends Component {
   }
   
   componentDidMount(){
-    console.log("inside componentDidMount");
+    console.log("C inside componentDidMount");
 
     fetch('http://192.168.0.51:3000/getListOfCustomers')
         .then((response) => {console.log('response'); return response.json();})
@@ -67,16 +67,24 @@ export default class CustomersScreen extends Component {
 
   render() {
     const customers = this.state.customers;
-    console.log("customers: "+JSON.stringify(customers));
+    console.log("C customers: "+JSON.stringify(customers));
     if (this.state.isLoading) {
-      return <View><Text>Loading...</Text></View>;
+      return (
+        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", padding:10 }}>
+          <ActivityIndicator
+            style={{ height: 80 }}
+            color="#0000ff"
+            size="large"
+          />
+        </View>
+      )  
     }
     return (
       <Container style={styles.container}>
         <Header>
           <Left>
-            <Button transparent onPress={() => this.props.navigation.goBack()}>
-              <Icon name="arrow-back" />
+            <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
+              <Icon name="menu" />
             </Button>
           </Left>
           <Body>

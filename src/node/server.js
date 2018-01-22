@@ -7,6 +7,9 @@ var app = express();
 const port = process.env.PORT || 3000;
 
 const stripe = require("stripe")(keySecret);
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 app.get('/getListOfCustomers', (req, res) => {
   stripe.customers.list(
@@ -39,15 +42,19 @@ app.get('/getListOfSubscriptionPlans', (req, res) => {
 });
 
 app.post('/createSubscription', (req, res) => {
+  console.log('body: '+JSON.stringify(req.body));
+  console.log('customer: '+req.body.customerId);
+  console.log('plans'+req.body.planIds);
+  console.log('billing: '+req.body.billing);
   stripe.subscriptions.create({
-    customer: "cus_C9TLtSYScGmqot",
+    customer: "cus_C9bd0jQt58CjL1",
     items: [
       {
         plan: "BasicMonthlyPlan",
       },
     ],
-    billing:'send_invoice',
-    days_until_due: 30
+    //billing:'send_invoice',
+    //days_until_due: 30
     //source: 'src_1BkaLTIgN6hknwupA3fkghyl'
   }, function(err, subscription) {
       if(err) {
@@ -60,7 +67,7 @@ app.post('/createSubscription', (req, res) => {
     }
   );
 });
-
+/*
 app.post('/createSource', (req, res) => {
   stripe.sources.create({
     type: 'card',
@@ -81,7 +88,7 @@ app.post('/createSource', (req, res) => {
   });
 });
 
-app.get('/detachSource', (req, res) => {
+app.post('/detachSource', (req, res) => {
   stripe.customers.deleteSource(
     "cus_C8SGrufiFJajmj",
     "src_1BkBRGIgN6hknwupr7BL6lwq",
@@ -97,7 +104,7 @@ app.get('/detachSource', (req, res) => {
   );
 });
 
-/*app.get('/createToken', (req, res) => {
+app.post('/createToken', (req, res) => {
   stripe.tokens.create({
     card: {
       "number": '6011111111111117',

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View } from "react-native";
+import { View, ActivityIndicator } from "react-native";
 
 import { Container, Header, Title, Content, Button, Icon, Text, Left, Right, Body, List, ListItem, Radio, CheckBox } from 'native-base';
 
@@ -9,15 +9,18 @@ import styles from './styles';
 class ManageSubscriptionsScreen extends Component {
 	constructor(props){
 		super(props);
+
 		this.state = {
 		  isLoading: true,
-		  isItemSelected : '',
-		  plans: {}
-		};
+		  checkboxes : [],
+		  plans: {},
+		  planIdMap: [],
+		  plansChecked: {}
+		}; 
 	}
 
 	componentDidMount(){
-		console.log("inside componentDidMount");
+		console.log("MS inside componentDidMount");
 	
 		fetch('http://192.168.0.51:3000/getListOfSubscriptionPlans')
 			.then((response) => {console.log('response'); return response.json();})
@@ -25,16 +28,47 @@ class ManageSubscriptionsScreen extends Component {
 			.catch((err) => {console.log(err)});  
 	}
 
-	render() {
-		const plans = this.state.plans;
-		console.log("plans: "+JSON.stringify(plans));
-		const { params } = this.props.navigation.state.params;
-		console.log('params: '+this.props.navigation.state.params.customer.email)
-		console.log('params: '+JSON.stringify(this.props.navigation.state.params.customer))
-		if (this.state.isLoading) {
-		  return <View><Text>Loading...</Text></View>;
+	toggleCheckbox(id, name) {
+		console.log("MS inside toggle: "+JSON.stringify(this.state.checkboxes)+" id: "+id+" name: "+name);
+		let checkboxes = this.state.checkboxes;
+		let planIdMap = this.state.planIdMap;
+
+		if(planIdMap && planIdMap.includes(id)){
+		  const index = planIdMap.indexOf(id);
+		  checkboxes.splice(index, 1);
+		  planIdMap.splice(index, 1);
+		} else {
+		  checkboxes = checkboxes.concat({planId: id, planName: name});
+		  planIdMap = planIdMap.concat(id);
 		}
 
+		this.setState({checkboxes});
+		this.setState({planIdMap});
+
+	}
+
+	render() {
+		if (this.state.isLoading) {
+			return (
+				<View style={{ flexDirection: "row", alignContent: "center", justifyContent: "space-around", padding:10 }}>
+				  <ActivityIndicator
+					style={{ height: 80 }}
+					color="#0000ff"
+					size="large"
+				  />
+				</View>
+			) 
+		}
+
+		const plans = this.state.plans;
+		console.log("MS plans: "+JSON.stringify(plans));
+		const { params } = this.props.navigation.state.params;
+		console.log('MS params: '+this.props.navigation.state.params.customer.email)
+		console.log('MS params: '+JSON.stringify(this.props.navigation.state.params.customer))
+		const checkboxes = this.state.checkboxes;
+		const planIdMap = this.state.planIdMap;
+		console.log("MS CB1: checkbox "+JSON.stringify(checkboxes));
+		console.log("MS CB1: planid "+JSON.stringify(planIdMap));
 		return (
 			<Container style={styles.container}>
 				<Header>
@@ -54,33 +88,38 @@ class ManageSubscriptionsScreen extends Component {
             			style={{ flexDirection: "column", justifyContent: "space-between", padding:10 }}
           			>
 					  	<Text>Customer : {this.props.navigation.state.params.customer.email}</Text>
-						<Button iconLeft light style={styles.mb15} onPress={() => this.props.navigation.navigate("CreateSubscriptionScreen" , {customer : this.props.navigation.state.params.customer})}>
+						<Button iconLeft light style={styles.mb15} onPress={() => this.props.navigation.navigate("CreateSubscriptionScreen" , {customer : this.props.navigation.state.params.customer, plans : checkboxes, planIds : planIdMap})}>
               				<Text>Create Subscription</Text>
             			</Button>
 					</View>
-					<View>
+					<View style={{flex:1}}>
 						<ListItem itemHeader first>
 							<Text>Subscription Plans</Text>
 						</ListItem>
+						{console.log("MS CB2: "+JSON.stringify(checkboxes))}
 						<List
 							dataArray={plans.data}
-							renderRow={(item,i) =>
+							renderRow={(item, i) => {
+								const itemName = item.name;
+								console.log('MS planIdMap: '+(planIdMap && planIdMap.includes(item.id)));
+								console.log('itemName2: '+itemName);								
+								return(
 								<ListItem 
 									key={item.id}
-									button 
-									onPress={() => this.props.navigation.navigate(item.name)}>
+									>
 									<Left>
 										<CheckBox
-											checked={true}
+											onPress={() => this.toggleCheckbox(item.id, item.name)}
+											checked={planIdMap && planIdMap.includes(item.id)}											
 											/>
 									</Left>
-									<Text>
+									<Text style={styles.planText}>
 										{item.name}
 									</Text>
 									<Right>
 										<Icon name='arrow-forward' />
 									</Right>
-								</ListItem>}
+								</ListItem>)}}
 						/>
 					</View>
 				</Content>

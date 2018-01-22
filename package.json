@@ -21,8 +21,9 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "body-parser": "^1.18.2",
     "expo": "23.0.6",
-    "express": "4.16.1",
+    "express": "^4.16.2",
     "native-base": "2.3.5",
     "react": "16.0.0",
     "react-native": "0.50.4",

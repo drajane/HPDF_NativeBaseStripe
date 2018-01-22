@@ -22,6 +22,16 @@ export default {
   itemValueText: {
     fontSize: 11
   },
+  sd_itemText: {
+    fontSize: 16
+  },
+  sd_itemValueText: {
+    fontSize: 14
+  },
+  sd_headingText: {
+    fontSize: 14,
+    color:'grey'
+  },
   buttonText: {
     fontSize: 16,
     color: 'white',
@@ -37,4 +47,7 @@ export default {
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
+  planText : {
+    justifyContent: 'flex-start'
+  }
 };
