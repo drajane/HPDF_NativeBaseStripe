@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, ActivityIndicator } from "react-native";
+import { View, ActivityIndicator, Alert, FlatList } from "react-native";
 
 import { Container, Header, Title, Content, Button, Icon, Text, Left, Right, Body, List, ListItem, Radio, CheckBox } from 'native-base';
 
@@ -9,7 +9,7 @@ import styles from './styles';
 class ManageSubscriptionsScreen extends Component {
 	constructor(props){
 		super(props);
-
+		this.checkPlanChecked = this.checkPlanChecked.bind(this);
 		this.state = {
 		  isLoading: true,
 		  checkboxes : [],
@@ -28,7 +28,6 @@ class ManageSubscriptionsScreen extends Component {
 	}
 
 	toggleCheckbox(id, name) {
-		console.log("MS inside toggle: "+JSON.stringify(this.state.checkboxes)+" id: "+id+" name: "+name);
 		let checkboxes = this.state.checkboxes;
 		let planIdMap = this.state.planIdMap;
 
@@ -41,9 +40,22 @@ class ManageSubscriptionsScreen extends Component {
 		  planIdMap = planIdMap.concat(id);
 		}
 
-		this.setState({...this.state, checkboxes});
-		this.setState({...this.state, planIdMap});
+		this.setState({checkboxes});
+		this.setState({planIdMap});
+	}
 
+	checkPlanChecked(){
+		if(this.state.checkboxes && this.state.checkboxes.length > 0)
+			return true
+		else
+			return false
+	}
+
+	handleCreateSubscriptionButtonClick(){
+		if (this.checkPlanChecked())
+			this.props.navigation.navigate("CreateSubscriptionScreen" , {customer : this.props.navigation.state.params.customer, plans : this.state.checkboxes, planIds : this.state.planIdMap})
+		else
+			Alert.alert("Please choose atleast one subscription plan")
 	}
 
 	render() {
@@ -62,7 +74,6 @@ class ManageSubscriptionsScreen extends Component {
 		const plans = this.state.plans;
 		console.log("MS plans: "+JSON.stringify(plans));
 		const { params } = this.props.navigation.state.params;
-		console.log('MS params: '+this.props.navigation.state.params.customer.email)
 		console.log('MS params: '+JSON.stringify(this.props.navigation.state.params.customer))
 		const checkboxes = this.state.checkboxes;
 		const planIdMap = this.state.planIdMap;
@@ -87,7 +98,7 @@ class ManageSubscriptionsScreen extends Component {
             			style={{ flexDirection: "column", justifyContent: "space-between", padding:10 }}
           			>
 					  	<Text>Customer : {this.props.navigation.state.params.customer.email}</Text>
-						<Button iconLeft light style={styles.mb15} onPress={() => this.props.navigation.navigate("CreateSubscriptionScreen" , {customer : this.props.navigation.state.params.customer, plans : checkboxes, planIds : planIdMap})}>
+						<Button iconLeft light style={styles.mb15} onPress={() => this.handleCreateSubscriptionButtonClick(checkboxes, planIdMap)}>
               				<Text>Create Subscription</Text>
             			</Button>
 					</View>
@@ -98,26 +109,26 @@ class ManageSubscriptionsScreen extends Component {
 						{
 							console.log("MS state: "+JSON.stringify(this.state))
 						}
-						<List
-							dataArray={plans.data}
-							renderRow={(item, i) => {
+						<FlatList
+							extraData={this.state}
+							data={plans.data}
+							keyExtractor={(item, index) => item.id}
+							renderItem={({item}) => {
 								const itemName = item.name;
 								console.log("MS state: "+JSON.stringify(this.state))
 								console.log('MS planIdMap: '+(planIdMap && planIdMap.includes(item.id)));
 								console.log('itemName2: '+itemName);								
 								return(
-								<ListItem 
-									key={item.id}
-									>
-									<Left>
-										<CheckBox
-											onPress={() => this.toggleCheckbox(item.id, item.name)}
-											checked={planIdMap && planIdMap.includes(item.id)}											
-											/>
-									</Left>
-									<Text style={styles.planText}>
-										{item.name}
-									</Text>
+								<ListItem>
+									<CheckBox
+										onPress={() => this.toggleCheckbox(item.id, item.name)}
+										checked={planIdMap && planIdMap.includes(item.id)}											
+										/>
+									<Body>
+										<Text>
+											{item.name}
+										</Text>
+									</Body>
 									<Right>
 										<Icon name='arrow-forward' />
 									</Right>

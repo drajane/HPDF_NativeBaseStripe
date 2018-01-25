@@ -8,11 +8,11 @@ import styles from './styles';
 
 class SubscriptionDetailsScreen extends Component {
     constructor(props){
-		super(props);
+        super(props);
+
 		this.state = {
 		  isLoading: true,
-		  isItemSelected : '',
-		  subscription: {}
+          subscription: {},
 		};
     }
 
@@ -28,9 +28,27 @@ class SubscriptionDetailsScreen extends Component {
                 },
                 body: JSON.stringify({customerId:this.props.navigation.state.params.customer.id, planIds:this.props.navigation.state.params.planIds, billing:this.props.navigation.state.params.billing})
             })
-			.then((response) => {console.log('SD response'); return response.json();})
+			.then((response) => { return response.json();})
 			.then((responseJson) => {console.log('SD responseData: '+responseJson); this.setState({isLoading : false, subscription : responseJson});})
 			.catch((err) => {console.log(err)});  
+    }
+
+    getPlanName() {
+        let subscription = this.state.subscription;
+        let planIds = this.props.navigation.state.params.planIds;
+        console.log("SD inside getPlan "+subscription.items.total_count);
+        console.log("SD inside getPlan "+planIds[0]);
+
+        if ((subscription.items.total_count) > 1) {
+            let titlePlanName = `${planIds[0]}`+ ` and 1 more...`;
+            console.log("SD inside getPlan if "+titlePlanName);
+            return titlePlanName; 
+        }
+        else{
+            let subscriptionPlanName = subscription.plan.name;
+            console.log("SD inside getPlan else "+subscription.plan.name);
+            return subscriptionPlanName;
+        }
     }
 
     render() {
@@ -51,7 +69,8 @@ class SubscriptionDetailsScreen extends Component {
         console.log("SD subscription: "+JSON.stringify(subscription));
         const { params } = this.props.navigation.state.params;
         console.log('SD params: '+this.props.navigation.state.params.customer.email)
-
+        var planName = this.getPlanName();
+        console.log("SD planName: "+planName);
         return (
             <Container style={styles.container}>
                 <Header>
@@ -68,7 +87,7 @@ class SubscriptionDetailsScreen extends Component {
 
                 <Content padder style={{ padding: 20 }}>
                     <View>
-                        <Text style={styles.sd_headingText}>Customer {subscription.customer} on {subscription.plan.name}</Text>
+                        <Text style={styles.sd_headingText}>Customer {subscription.customer} on {planName}</Text>
                         <ListItem>
                             <Text style={styles.sd_itemText}>ID: </Text>
                             <Text style={styles.sd_itemValueText}>{subscription.id}</Text>
@@ -79,7 +98,14 @@ class SubscriptionDetailsScreen extends Component {
                         </ListItem>
                         <ListItem>
                             <Text style={styles.sd_itemText}>Plan: </Text>
-                            <Text style={styles.sd_itemValueText}>{subscription.plan.name}</Text>
+                            <List
+                                dataArray={this.props.navigation.state.params.plans}
+                                renderRow={(item, i) => 
+                                    <ListItem key={item.planId}>
+                                        <Text style={styles.sd_itemValueText}>{item.planName}</Text>
+                                    </ListItem>
+                                    }
+                            />
                         </ListItem>
                         <ListItem>
                             <Text style={styles.sd_itemText}>Quantity: </Text>

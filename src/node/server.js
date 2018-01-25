@@ -43,22 +43,25 @@ app.get('/getListOfSubscriptionPlans', (req, res) => {
 
 app.post('/createSubscription', (req, res) => {
   console.log('body: '+JSON.stringify(req.body));
-  console.log('customer: '+req.body.customerId);
-  console.log('plans'+req.body.planIds);
-  var plans = req.body.planIds;
-  console.log('billing: '+req.body.billing);
-  plans.forEach(element => {
-    console.log(element);
+  var customerId = req.body.customerId;
+  var planIds = req.body.planIds;
+  var billing = req.body.billing;
+  var strPlan = "plan: ";
+  console.log('customer: '+customerId);
+  console.log('plans: '+planIds);
+  console.log('billing: '+billing);
+  planIds.forEach(element => {
+    console.log("{plan: "+element+",},");
   });
   stripe.subscriptions.create({
-    customer: "cus_C9bd0jQt58CjL1",
+    customer: customerId,
     items: [
-      {
-        
-        //plan: "BasicMonthlyPlan",
+      {        
+        plan: planIds[0],
       },
     ],
-    //billing:'send_invoice',
+    billing: billing,
+
     //days_until_due: 30
     //source: 'src_1BkaLTIgN6hknwupA3fkghyl'
   }, function(err, subscription) {

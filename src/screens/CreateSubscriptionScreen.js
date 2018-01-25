@@ -93,7 +93,7 @@ class CreateSubscriptionScreen extends Component {
                         <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.goBack()}>
               				<Text style={styles.buttonText}>Cancel</Text>
             			</TouchableHighlight>
-                        <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.navigate('SubscriptionDetailsScreen', {customer : this.props.navigation.state.params.customer, planIds : this.props.navigation.state.params.planIds, billing : this.state.selectedRadio})}>
+                        <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.navigate('SubscriptionDetailsScreen', {customer : this.props.navigation.state.params.customer, planIds : this.props.navigation.state.params.planIds, plans: this.props.navigation.state.params.plans, billing : this.state.selectedRadio})}>
               				<Text style={styles.buttonText}>Create Subscription</Text>
             			</TouchableHighlight>
                     </View>
