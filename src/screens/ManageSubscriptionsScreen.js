@@ -83,8 +83,8 @@ class ManageSubscriptionsScreen extends Component {
 			<Container style={styles.container}>
 				<Header>
 					<Left>
-						<Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-							<Icon name='menu' />
+						<Button transparent onPress={() => this.props.navigation.goBack()}>
+							<Icon name='arrow-back' />
 						</Button>
 					</Left>
 					<Body style={{flex: 3}}>

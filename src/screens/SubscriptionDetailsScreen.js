@@ -9,7 +9,7 @@ import styles from './styles';
 class SubscriptionDetailsScreen extends Component {
     constructor(props){
         super(props);
-
+        this.getDate = this.getDate.bind(this);
 		this.state = {
 		  isLoading: true,
           subscription: {},
@@ -26,7 +26,7 @@ class SubscriptionDetailsScreen extends Component {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({customerId:this.props.navigation.state.params.customer.id, planIds:this.props.navigation.state.params.planIds, billing:this.props.navigation.state.params.billing})
+                body: JSON.stringify({customerId:this.props.navigation.state.params.customer.id, planIds:this.props.navigation.state.params.planIds, billing:this.props.navigation.state.params.billing, paymentDue: this.props.navigation.state.params.paymentDue})
             })
 			.then((response) => { return response.json();})
 			.then((responseJson) => {console.log('SD responseData: '+responseJson); this.setState({isLoading : false, subscription : responseJson});})
@@ -51,6 +51,16 @@ class SubscriptionDetailsScreen extends Component {
         }
     }
 
+    getDate(dateInSecs){
+        console.log('dateInMilliSecs: '+dateInSecs);
+        var d = new Date(dateInSecs * 1000);
+        mm = ('0'+ (d.getMonth() + 1)).slice(-2);
+        dd = ('0'+ d.getDate()).slice(-2);
+        var date = d.getFullYear()+'/'+mm+'/'+dd;
+        console.log('date: '+date);
+        return date;
+    }
+
     render() {
 
         if (this.state.isLoading) {
@@ -66,6 +76,8 @@ class SubscriptionDetailsScreen extends Component {
         }
 
         const subscription = this.state.subscription;
+        var createdDate = this.getDate(subscription.created);
+        console.log("SD createdDate: "+createdDate);
         console.log("SD subscription: "+JSON.stringify(subscription));
         const { params } = this.props.navigation.state.params;
         console.log('SD params: '+this.props.navigation.state.params.customer.email)
@@ -112,8 +124,12 @@ class SubscriptionDetailsScreen extends Component {
                             <Text style={styles.sd_itemValueText}>{subscription.quantity}</Text>
                         </ListItem>
                         <ListItem>
+                            <Text style={styles.sd_itemText}>Current Period: </Text>
+                            <Text style={styles.sd_itemValueText}>{this.getDate(subscription. current_period_start)+' to '+this.getDate(subscription. current_period_end)}</Text>
+                        </ListItem>
+                        <ListItem>
                             <Text style={styles.sd_itemText}>Created: </Text>
-                            <Text style={styles.sd_itemValueText}>{subscription.created}</Text>
+                            <Text style={styles.sd_itemValueText}>{this.getDate(subscription.created)}</Text>
                         </ListItem>
                         <ListItem>
                             <Text style={styles.sd_itemText}>Tax Percent: </Text>

@@ -32,8 +32,8 @@ class CreateSubscriptionScreen extends Component {
             <Container style={styles.container}>
                 <Header>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.navigate('DrawerOpen')}>
-                            <Icon name='menu' />
+                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                            <Icon name='arrow-back' />
                         </Button>
                     </Left>
                     <Body style={{flex: 3}}>
@@ -93,7 +93,7 @@ class CreateSubscriptionScreen extends Component {
                         <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.goBack()}>
               				<Text style={styles.buttonText}>Cancel</Text>
             			</TouchableHighlight>
-                        <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.navigate('SubscriptionDetailsScreen', {customer : this.props.navigation.state.params.customer, planIds : this.props.navigation.state.params.planIds, plans: this.props.navigation.state.params.plans, billing : this.state.selectedRadio})}>
+                        <TouchableHighlight light style={styles.button} onPress={() => this.props.navigation.navigate('SubscriptionDetailsScreen', {customer : this.props.navigation.state.params.customer, planIds : this.props.navigation.state.params.planIds, plans: this.props.navigation.state.params.plans, billing : this.state.selectedRadio, paymentDue : '30'})}>
               				<Text style={styles.buttonText}>Create Subscription</Text>
             			</TouchableHighlight>
                     </View>

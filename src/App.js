@@ -9,11 +9,15 @@ import CreateSubscriptionScreen from './screens/CreateSubscriptionScreen';
 import SubscriptionDetailsScreen from './screens/SubscriptionDetailsScreen';
 
 const AppNavigator = StackNavigator({
-  CustomersScreen: {screen: CustomersScreen},
-  ManageSubscriptionsScreen: {screen: ManageSubscriptionsScreen},
-  CreateSubscriptionScreen: {screen: CreateSubscriptionScreen},
-  SubscriptionDetailsScreen: {screen: SubscriptionDetailsScreen},
-});
+    CustomersScreen: {screen: CustomersScreen},
+    ManageSubscriptionsScreen: {screen: ManageSubscriptionsScreen},
+    CreateSubscriptionScreen: {screen: CreateSubscriptionScreen},
+    SubscriptionDetailsScreen: {screen: SubscriptionDetailsScreen},
+  },
+  {
+    headerMode: "none",
+  }
+);
 
 export default class App extends React.Component {
   render() {

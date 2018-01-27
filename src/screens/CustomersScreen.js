@@ -19,8 +19,6 @@ import {
 
 import { View, ActivityIndicator } from 'react-native';
 
-// import { customers } from '../node/data';
-
 import styles from "./styles";
 
 
@@ -33,16 +31,6 @@ export default class CustomersScreen extends Component {
       customers: {}
     };
     this.getJsonData = this.getJsonData.bind(this);
-  }
-
-  componentWillMount() {
-    console.log("C inside componentWillMount");
-    // this.getJsonData(); 
-
-    /* fetch('http://192.168.0.51:3000/getListOfCustomers')
-        .then((response) => {console.log('response'); return response.json();})
-        .then((responseJson) => {console.log('responseData: '+responseJson); this.setState({customers : responseJson}); return;})
-        .catch((err) => {console.log(err)}); */
   }
 
   getJsonData() 
