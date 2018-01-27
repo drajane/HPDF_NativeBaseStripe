@@ -7,7 +7,7 @@ This app integrates with the Stripe API via Node-Express backend to implement th
 ## How it works?
 
 ### Workflow
-The merchant needs to do the following on [Stripe Dashboard] (https://dashboard.stripe.com/test/dashboard)
+The merchant needs to do the following on [Stripe Dashboard](https://dashboard.stripe.com/test/dashboard)
 1. Create an account 
 2. Configure Customers, Products and Subscription Plans
 3. Associate a Credit Card with the Customer on Stripe Dashboard in case the billing is charged automatically
@@ -21,10 +21,10 @@ When the merchant opens the mobile app,
 6. The subscription details such as ID, subscription period etc. are displayed on "Subscription Details' screen
 
 ### Internal Implementation
-Every call for listing customers, listing subscription plans and create subscription is sent to the Node Express backend which invokes the [Stripe API] (https://stripe.com/docs/api#intro) and sends the response back to front-end as JSON response.
+Every call for listing customers, listing subscription plans and create subscription is sent to the Node Express backend which invokes the [Stripe API](https://stripe.com/docs/api#intro) and sends the response back to front-end as JSON response.
 
 ## What does it use?
-1. [Stripe API] (https://stripe.com/docs/api#intro)
+1. [Stripe API](https://stripe.com/docs/api#intro)
 
 ## Installation
 
