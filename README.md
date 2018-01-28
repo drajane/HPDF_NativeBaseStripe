@@ -62,3 +62,7 @@ C:\> node server.js
 * Open the Expo app in Android device and scan the QR code displayed on the Expo XDE in the machine
 
 * The app will open on the Android device
+
+### Developers
+React-Native  : https://github.com/drajane/
+Node Express  : https://github.com/vishalsoni242
