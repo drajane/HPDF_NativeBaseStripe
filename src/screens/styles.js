@@ -49,5 +49,9 @@ export default {
   },
   planText : {
     justifyContent: 'flex-start'
+  },
+  customerIdText : {
+    fontSize: 12,
+    color:'grey'
   }
 };

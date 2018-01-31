@@ -21,7 +21,7 @@ class ManageSubscriptionsScreen extends Component {
 	componentDidMount(){
 		console.log("MS inside componentDidMount");
 	
-		fetch('http://192.168.0.51:3000/getListOfSubscriptionPlans')
+		fetch('https://api.aspirator79.hasura-app.io/getListOfSubscriptionPlans')
 			.then((response) => {console.log('response'); return response.json();})
 			.then((responseJson) => {console.log('responseData: '+responseJson); this.setState({isLoading : false, plans : responseJson}); return;})
 			.catch((err) => {console.log(err)});  
@@ -97,7 +97,9 @@ class ManageSubscriptionsScreen extends Component {
 					<View
             			style={{ flexDirection: "column", justifyContent: "space-between", padding:10 }}
           			>
-					  	<Text>Customer : {this.props.navigation.state.params.customer.email}</Text>
+					  	<View style={{flexDirection: 'row'}}>
+					  		<Text>Customer : </Text><Text>{this.props.navigation.state.params.customer.email}</Text><Text style={styles.customerIdText}>{' - '+this.props.navigation.state.params.customer.id}</Text>
+						</View>
 						<Button iconLeft light style={styles.mb15} onPress={() => this.handleCreateSubscriptionButtonClick(checkboxes, planIdMap)}>
               				<Text>Create Subscription</Text>
             			</Button>

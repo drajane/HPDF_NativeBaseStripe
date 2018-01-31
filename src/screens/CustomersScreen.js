@@ -30,23 +30,12 @@ export default class CustomersScreen extends Component {
       isLoading: true,
       customers: {}
     };
-    this.getJsonData = this.getJsonData.bind(this);
-  }
-
-  getJsonData() 
-  {
-    console.log("C inside getJsonData");
-    
-    return fetch('http://192.168.0.51:3000/getListOfCustomers')
-              .then((response) => {console.log('response: '+response); return response.json();})
-              .then((responseJson) => {console.log('responseData: '+responseJson); this.setState({customers : responseJson}); return;})
-              .catch((err) => {console.log(err)})
   }
   
   componentDidMount(){
     console.log("C inside componentDidMount");
 
-    fetch('http://192.168.0.51:3000/getListOfCustomers')
+    fetch('https://api.aspirator79.hasura-app.io/getListOfCustomers')
         .then((response) => {console.log('response'); return response.json();})
         .then((responseJson) => {console.log('responseData: '+responseJson); this.setState({isLoading : false, customers : responseJson}); return;})
         .catch((err) => {console.log(err)});  
@@ -85,6 +74,7 @@ export default class CustomersScreen extends Component {
               dataArray={customers.data}
               renderRow={(item, i) => {
               const customerEmail = item.email; 
+              const customerId = item.id; 
               console.log('customeremail: '+customerEmail)
               console.log('itemid: '+item.id)
               return (
@@ -92,10 +82,10 @@ export default class CustomersScreen extends Component {
                   key={item.id}
                   button noborder
                   onPress={() => this.props.navigation.navigate("ManageSubscriptionsScreen" , {customer : item})}>
-                  <Text>{customerEmail}</Text>
-                  <Right>
-                    <Icon name="arrow-forward" />
-                  </Right>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text>{customerEmail}</Text><Text style={styles.customerIdText}>{' - '+customerId}</Text>
+                  </View>
+                  <Icon name="arrow-forward" />
                 </ListItem>)}}
             />
         </Content>

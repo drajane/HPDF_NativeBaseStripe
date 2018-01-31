@@ -20,7 +20,7 @@ class SubscriptionDetailsScreen extends Component {
         console.log("SD inside componentDidMount");
         console.log('SD params: '+this.props.navigation.state.params.customer.id)
 	
-		fetch('http://192.168.0.51:3000/createSubscription',{
+		fetch('https://api.aspirator79.hasura-app.io/createSubscription',{
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
@@ -99,7 +99,7 @@ class SubscriptionDetailsScreen extends Component {
 
                 <Content padder style={{ padding: 20 }}>
                     <View>
-                        <Text style={styles.sd_headingText}>Customer {subscription.customer} on {planName}</Text>
+                        <Text style={styles.sd_headingText}>Customer {this.props.navigation.state.params.customer.email} on {planName}</Text>
                         <ListItem>
                             <Text style={styles.sd_itemText}>ID: </Text>
                             <Text style={styles.sd_itemValueText}>{subscription.id}</Text>

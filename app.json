@@ -1,5 +1,13 @@
 {
   "expo": {
-    "sdkVersion": "23.0.0"
+	"name": "HPDF_NativeBaseStripe",
+	"slug": "HPDF-NativeBaseStripe",
+    "sdkVersion": "23.0.0",
+	"ios": {
+      "supportsTablet": true
+    },	
+	"android": {
+      "package": "com.hpdf.hpdfnativebasestripe"
+    }
   }
 }

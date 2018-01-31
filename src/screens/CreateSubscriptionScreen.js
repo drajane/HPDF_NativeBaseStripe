@@ -48,7 +48,9 @@ class CreateSubscriptionScreen extends Component {
                             <Text style={styles.itemHeaderText}>Customer</Text>
                         </ListItem>
                         <ListItem>
-                            <Text style={styles.itemValueText}>{this.props.navigation.state.params.customer.email}</Text>
+                            <View style={{flexDirection: 'row'}}>
+                                <Text style={styles.itemValueText}>{this.props.navigation.state.params.customer.email}</Text><Text style={styles.customerIdText}>{' - '+this.props.navigation.state.params.customer.id}</Text>
+                            </View>
                         </ListItem>
                         <ListItem itemHeader>
                             <Text style={styles.itemHeaderText}>Plan</Text>
@@ -77,16 +79,16 @@ class CreateSubscriptionScreen extends Component {
                             <Text style={styles.itemHeaderText}>Billing</Text>
                         </ListItem>
                         <ListItem>
-                            <Left>
-								<Radio selected={this.state.selectedRadio === 'charge_automatically'} onPress={() => {this.toggleRadioButton('charge_automatically')}}/>
-							</Left>
-                            <Text style={styles.itemText}>Automatically charge default payment method on file</Text>
+							<Radio selected={this.state.selectedRadio === 'charge_automatically'} onPress={() => {this.toggleRadioButton('charge_automatically')}}/>
+                            <Body>
+                                <Text style={styles.itemText}>Automatically charge default payment method on file</Text>
+                            </Body>
                         </ListItem>
                         <ListItem>
-                            <Left>
-								<Radio selected={this.state.selectedRadio === 'send_invoice'} onPress={() => {this.toggleRadioButton('send_invoice')}}/>
-							</Left>
-                            <Text style={styles.itemText}>Email invoices for customers to pay manually</Text>
+							<Radio selected={this.state.selectedRadio === 'send_invoice'} onPress={() => {this.toggleRadioButton('send_invoice')}}/>
+                            <Body>
+                                <Text style={styles.itemText}>Email invoices for customers to pay manually</Text>
+                            </Body>
                         </ListItem>
                     </View>
                     <View style={{ flexDirection: "row", justifyContent: "space-between", alignContent: "flex-end", padding:10 }}>
