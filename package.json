@@ -8,7 +8,6 @@
     "react-test-renderer": "16.0.0"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
-  "proxy": "http://192.168.0.51:3000/",
   "scripts": {
     "start": "react-native-scripts start",
     "eject": "react-native-scripts eject",

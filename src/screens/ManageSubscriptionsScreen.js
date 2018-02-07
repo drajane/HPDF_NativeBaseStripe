@@ -21,7 +21,7 @@ class ManageSubscriptionsScreen extends Component {
 	componentDidMount(){
 		console.log("MS inside componentDidMount");
 	
-		fetch('https://api.aspirator79.hasura-app.io/getListOfSubscriptionPlans')
+		fetch('https://api.abscissae34.hasura-app.io/getListOfSubscriptionPlans')
 			.then((response) => {console.log('response'); return response.json();})
 			.then((responseJson) => {console.log('responseData: '+responseJson); this.setState({isLoading : false, plans : responseJson}); return;})
 			.catch((err) => {console.log(err)});  

@@ -35,7 +35,7 @@ export default class CustomersScreen extends Component {
   componentDidMount(){
     console.log("C inside componentDidMount");
 
-    fetch('https://api.aspirator79.hasura-app.io/getListOfCustomers')
+    fetch('https://api.abscissae34.hasura-app.io/getListOfCustomers')
         .then((response) => {console.log('response'); return response.json();})
         .then((responseJson) => {console.log('responseData: '+responseJson); this.setState({isLoading : false, customers : responseJson}); return;})
         .catch((err) => {console.log(err)});  

@@ -20,7 +20,7 @@ class SubscriptionDetailsScreen extends Component {
         console.log("SD inside componentDidMount");
         console.log('SD params: '+this.props.navigation.state.params.customer.id)
 	
-		fetch('https://api.aspirator79.hasura-app.io/createSubscription',{
+		fetch('https://api.abscissae34.hasura-app.io/createSubscription',{
                 method: "POST",
                 headers: {
                     'Accept': 'application/json',
