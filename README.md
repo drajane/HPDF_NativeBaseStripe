@@ -1,7 +1,7 @@
 # Stripe - Subscription Payment
 
 ## What is it?
-Stripe - Subscription Payment is a CRNA mobile app which allows the merchants to set up recurring billing for the customers using Subscription feature.
+Stripe - Subscription Payment is a simple react-native mobile app which allows the merchants to set up recurring billing for the customers using Subscription feature.
 This app integrates with the Stripe API via Node-Express backend to implement the Subscriptions smart engine of Stripe API for recurring payments.
 
 ## How it works?
@@ -44,24 +44,21 @@ $ npm install
 
 ### Run Node Express Back-end in command prompt
 
+```
 C:\> cd HPDF_NativeBaseStripe\src\node
 
 C:\HPDF_NativeBaseStripe\src\node>set SECRET_KEY=xxxx (Get the Secret Key from your Stripe Account)
 
 C:\> node server.js
+```
 
+### Run on Android device
 
-### Run on Expo in Android
+Go to Git Bash terminal.
 
-* Make sure you have an **Expo XDE** installed on your machine and **Expo app** installed in Android device.
-
-* Open HPDF_NativeBaseStripe project in Expo XDE
-
-* Click on 'Share' on the right side of the Expo XDE and QR code is displayed
-
-* Open the Expo app in Android device and scan the QR code displayed on the Expo XDE in the machine
-
-* The app will open on the Android device
+```sh
+$ react-native run-android
+```
 
 ## Developers
 React-Native  : https://github.com/drajane/
