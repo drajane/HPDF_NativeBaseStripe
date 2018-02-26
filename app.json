@@ -1,13 +1,15 @@
 {
   "expo": {
-	"name": "HPDF_NativeBaseStripe",
-	"slug": "HPDF-NativeBaseStripe",
-  "sdkVersion": "23.0.0",
-	"ios": {
+    "name": "HPDF_NativeBaseStripe",
+    "slug": "HPDF-NativeBaseStripe",
+    "sdkVersion": "23.0.0",
+    "ios": {
       "supportsTablet": true
-    },	
-	"android": {
+    },
+    "android": {
       "package": "com.hpdf.hpdfnativebasestripe"
     }
-  }
+  },
+  "name": "HPDF_NativeBaseStripe",
+  "displayName": "Stripe-Subscriptions"
 }

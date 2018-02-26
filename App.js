@@ -1,8 +1,9 @@
 import React from 'react';
-import Setup from './src/boot/setup';
 
-export default class App extends React.Component {
+import App from "./src/App";
+
+export default class App1 extends React.Component {
   render() {
-    return <Setup />;
+    return <App />;
   }
 }
