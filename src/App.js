@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Root } from 'native-base';
-import { StackNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator } from 'react-navigation';
 
 import CustomersScreen from './screens/CustomersScreen';
 import ManageSubscriptionsScreen from './screens/ManageSubscriptionsScreen';
@@ -16,7 +16,7 @@ const AppNavigator = StackNavigator({
   },
   {
     headerMode: "none",
-  }
+  },
 );
 
 export default class App extends React.Component {

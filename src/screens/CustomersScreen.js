@@ -82,10 +82,14 @@ export default class CustomersScreen extends Component {
                   key={item.id}
                   button noborder
                   onPress={() => this.props.navigation.navigate("ManageSubscriptionsScreen" , {customer : item})}>
-                  <View style={{flexDirection: 'row'}}>
-                    <Text>{customerEmail}</Text><Text style={styles.customerIdText}>{' - '+customerId}</Text>
-                  </View>
-                  <Icon name="arrow-forward" />
+                  <Body>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text>{customerEmail}</Text><Text style={styles.customerIdText}>{' - '+customerId}</Text>
+                    </View>
+                  </Body>
+                  <Right>
+                    <Icon name="arrow-forward" />
+                  </Right>
                 </ListItem>)}}
             />
         </Content>
